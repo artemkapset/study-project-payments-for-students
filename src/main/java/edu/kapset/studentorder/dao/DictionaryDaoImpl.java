@@ -23,20 +23,8 @@ public class DictionaryDaoImpl implements DictionaryDao {
 
     private static final String GET_AREA = "SELECT * FROM jc_country_struct WHERE area_id LIKE ? AND area_id <> ?";
 
-    // TODO refactoring - make one method
     private Connection getConnection() throws SQLException {
-        /*
-        загрузка драйвера - "заставляем" драйвер postgres зарегистрироваться в подсистеме JDBC
-        Class.forName("org.postgresql.Driver"); // загрузка класса по имени (...рефлексия)
-        */
-
-        // получение соединения с базой данных
-        Connection con = DriverManager.getConnection(
-                Config.getProperty(Config.DB_URL),
-                Config.getProperty(Config.DB_LOGIN),
-                Config.getProperty(Config.DB_PASSWORD));
-
-        return con;
+        return ConnectionBuilder.getConnection();
     }
 
 
