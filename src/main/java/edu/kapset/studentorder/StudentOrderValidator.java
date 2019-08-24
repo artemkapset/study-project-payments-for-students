@@ -1,10 +1,12 @@
 package edu.kapset.studentorder;
 
+import edu.kapset.studentorder.dao.StudentOrderDaoImpl;
 import edu.kapset.studentorder.domain.*;
 import edu.kapset.studentorder.domain.children.AnswerChildren;
 import edu.kapset.studentorder.domain.register.AnswerCityRegister;
 import edu.kapset.studentorder.domain.student.AnswerStudent;
 import edu.kapset.studentorder.domain.wedding.AnswerWedding;
+import edu.kapset.studentorder.exception.DaoException;
 import edu.kapset.studentorder.mail.MailSender;
 import edu.kapset.studentorder.validators.ChildrenValidator;
 import edu.kapset.studentorder.validators.CityRegisterValidator;
@@ -31,19 +33,19 @@ public class StudentOrderValidator {
     }
 
     public void checkAll() {
-        List<StudentOrder> soList = readStudentOrders(); // "считывание" массива заявок
-        for (StudentOrder so : soList) {
-            checkOneOrder(so);
+        List<StudentOrder> soList = null; // "считывание" массива заявок
+        try {
+            soList = readStudentOrders();
+            for (StudentOrder so : soList) {
+                checkOneOrder(so);
+            }
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
     }
 
-    public List<StudentOrder> readStudentOrders() {
-        List<StudentOrder> soList = new LinkedList<>();
-        for (int c = 0; c < 5; c++) {
-            StudentOrder so = SaveStudentOrder.buildStudentOrder(c);
-            soList.add(so);
-        }
-        return soList;
+    public List<StudentOrder> readStudentOrders() throws DaoException {
+        return new StudentOrderDaoImpl().getStudentOrders();
     }
 
     public void checkOneOrder(StudentOrder so) {
