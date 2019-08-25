@@ -3,6 +3,8 @@ package edu.kapset.studentorder.dao;
 import edu.kapset.studentorder.config.Config;
 import edu.kapset.studentorder.domain.*;
 import edu.kapset.studentorder.exception.DaoException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,6 +16,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StudentOrderDaoImpl implements StudentOrderDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentOrderDaoImpl.class);
 
     private static final String INSERT_ORDER = "INSERT INTO jc_student_order(\n" +
             "\tstudent_order_status,\n" +
@@ -113,6 +117,8 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
 
         Long result = -1L;  // идентификатор заявки
 
+        logger.debug("StudentOrder: ", so); //запись состояния заявки при её сохранении
+
         try (Connection con = getConnection();
              PreparedStatement stmt = con.prepareStatement(
                      INSERT_ORDER,
@@ -150,6 +156,7 @@ public class StudentOrderDaoImpl implements StudentOrderDao {
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
 

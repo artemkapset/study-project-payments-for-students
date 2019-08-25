@@ -6,12 +6,16 @@ import edu.kapset.studentorder.domain.PassportOffice;
 import edu.kapset.studentorder.domain.RegisterOffice;
 import edu.kapset.studentorder.domain.Street;
 import edu.kapset.studentorder.exception.DaoException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class DictionaryDaoImpl implements DictionaryDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(DictionaryDaoImpl.class);
 
     private static final String GET_STREET = "SELECT street_code, street_name FROM jc_street WHERE UPPER (street_name) LIKE UPPER (?)";
     // знак "?" означает параметризацию,
@@ -51,6 +55,7 @@ public class DictionaryDaoImpl implements DictionaryDao {
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
 
@@ -77,6 +82,7 @@ public class DictionaryDaoImpl implements DictionaryDao {
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
 
@@ -103,6 +109,7 @@ public class DictionaryDaoImpl implements DictionaryDao {
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
 
@@ -131,6 +138,7 @@ public class DictionaryDaoImpl implements DictionaryDao {
             }
         }
         catch (SQLException ex) {
+            logger.error(ex.getMessage(), ex);
             throw new DaoException(ex);
         }
 

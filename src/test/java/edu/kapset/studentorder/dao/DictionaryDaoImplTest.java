@@ -7,18 +7,16 @@ import edu.kapset.studentorder.domain.Street;
 import edu.kapset.studentorder.exception.DaoException;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.Statement;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
 
 public class DictionaryDaoImplTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(DictionaryDaoImplTest.class);
 
     @BeforeClass
     public static void startUp() throws Exception {
@@ -27,6 +25,7 @@ public class DictionaryDaoImplTest {
 
     @Test
     public void testStreet() throws DaoException {
+        logger.info("TEST");
         List<Street> streets = new DictionaryDaoImpl().findStreets("про");
         assertTrue(streets.size() == 2);
     }
